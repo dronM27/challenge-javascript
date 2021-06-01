@@ -256,7 +256,37 @@ OrderedLinkedList.prototype.removeHigher = function() {
 // < null
 
 OrderedLinkedList.prototype.removeLower = function(){
-    
+    if (this.head === null) {
+        return null;
+    }
+    if (this.head.next === null) {
+        let aux = this.head;
+        this.head = null;
+        return aux.value;
+    }
+    let cursor = this.head;
+    let aux = this.head;
+    let elim = this.head;
+    while (aux.next) {
+        if (aux.next.value > elim.value) {
+            aux = aux.next;
+        }
+        else if (aux.next.value < elim.value) {
+            elim = aux.next;
+            cursor = aux;
+            aux = aux.next;
+        }
+    }
+    if (this.head === elim) {
+        this.head = this.head.next;
+        elim.next = null;
+        return elim.value;
+    }
+    else {
+        cursor.next = elim.next;
+        elim.next = null;
+        return elim.value;
+    }
 }
 
 
