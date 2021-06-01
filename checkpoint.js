@@ -115,7 +115,6 @@ function deepEqualArrays(arr1, arr2) {
 }
 
 
-
 // ----- LinkedList -----
 
 // Deben completar la siguiente implementacion 'OrderedLinkedList'(OLL)
@@ -129,6 +128,7 @@ function deepEqualArrays(arr1, arr2) {
 // Las dos clases principales ya van a estar implementadas a continuacion:
 function OrderedLinkedList() {
     this.head = null;
+    
 }
 // notar que Node esta implementado en el archivo DS
 
@@ -162,8 +162,32 @@ OrderedLinkedList.prototype.print = function(){
 // < 'head --> 5 --> 3 --> 1 --> null'
 //               4
 OrderedLinkedList.prototype.add = function(val){
-    
-}
+
+    var nodo = new Node(val);
+    if (this.head === null) {
+        this.head = nodo;      
+        return nodo;
+    }
+    if (this.head.value < val) {
+        nodo.next = this.head;
+        this.head = nodo;      
+        return nodo;
+    }
+    let cursor = this.head;
+    let sigue = cursor.next;
+    while(sigue !== null) {
+        if (sigue.value < val) {
+            cursor.next = nodo;
+            nodo.next = sigue;
+            
+            return nodo;
+        }
+        cursor = cursor.next;
+        sigue = sigue.next;
+    }
+    cursor.next = nodo;  
+    return nodo;
+};
 
 
 // EJERCICIO 5
@@ -181,8 +205,38 @@ OrderedLinkedList.prototype.add = function(val){
 // > LL.removeHigher()
 // < null
 
-OrderedLinkedList.prototype.removeHigher = function(){
-    
+OrderedLinkedList.prototype.removeHigher = function() {
+    if (this.head === null) {
+        return null;
+    }
+    if(this.head.next === null) {
+        let aux = this.head;
+        this.head = null;
+        return aux.value;
+    }
+    let cursor = this.head;
+    let aux = this.head;
+    let elim = this.head;
+    while (aux.next) {
+        if (aux.next.value < elim.value) {
+            aux = aux.next;
+        }
+        else if (aux.next.value > elim.value) {
+            elim = aux.next;
+            cursor = aux;  
+            aux = aux.next;
+        }
+    }
+    if(this.head === elim) {
+        this.head = this.head.next;
+        elim.next = null;
+        return elim.value;
+    } 
+    else {
+        cursor.next = elim.next;
+        elim.next = null;
+        return elim.value;
+    }   
 }
 
 
