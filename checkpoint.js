@@ -339,6 +339,7 @@ function multiCallbacks(cbs1, cbs2){
 
 BinarySearchTree.prototype.toArray = function() {
     
+    
 }
 
 
@@ -367,7 +368,26 @@ function primalityTest(n) {
 // https://en.wikipedia.org/wiki/Quicksort
 
 function quickSort(array) {
-    
+    if (array.length <= 1) {
+        return array;
+    }
+    let rand = Math.floor(Math.random() * array.length);
+    let pivote = array[rand];
+    let izq = [];
+    let der = [];
+    let igualPivote= [];
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === pivote) {
+            igualPivote.push(array[i]);
+        }
+        if (array[i] < pivote) {
+            izq.push(array[i]);
+        }
+        if (array[i] > pivote) {
+            der.push(array[i]);
+        }
+    }
+    return quickSort(der).concat(igualPivote).concat(quickSort(izq));
 }
 // QuickSort ya lo conocen solo que este 
 // ordena de mayor a menor
